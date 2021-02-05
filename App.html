@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://raw.githubusercontent.com/n5ro/aframe-extras/master/src/loaders/animation-mixer.js"></script>
+    <script src="aframe-button-controls.js"></script>
+
+    <script type="text/javascript">
+    AFRAME.registerComponent('button-controls-test', {
+         init: function () {
+           console.log("button-controls-test init");
+
+           this.handlers = {
+             buttondown: function (evt) {
+               console.log(evt);
+              var play_button = document.getElementById('play-button')
+               //var play_sound = document.getElementById('sound')
+               const sound = document.querySelector('a-sound')
+               //const anim = document.querySelector('rextitle')
+               //play_sound.dataset.sound__audio = "autoplay: true; src: sound/audio-test.mp3"
+                //anim.source = '3D/VREX.gltf'
+               if (play_button != null){
+                 let audio = sound.components.sound;
+                 play = audio.playSound()
+
+                 play_button.remove()
+                 console.log('removing play button')
+               }
+
+             },
+             buttonup: function (evt) {
+               console.log(evt);
+                 }
+           }
+         },
+
+         play: function () {
+             const controlsEl = document.querySelector('[button-controls]');
+             controlsEl.addEventListener('buttondown', this.handlers.buttondown);
+             controlsEl.addEventListener('buttonup', this.handlers.buttonup);
+
+          },
+
+         pause: function () {
+             const controlsEl = document.querySelector('[button-controls]');
+             controlsEl.removeEventListener('buttondown', this.handlers.buttondown);
+             controlsEl.removeEventListener('buttonup', this.handlers.buttonup);
+
+         }
+     });
+    </script>
+
+  </head>
+  <body>
+    <div id="app">
+
+
+        <a-scene button-controls-test dnd-gltf="" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" aframe-inspector-removed-embedded="undefined" device-orientation-permission-ui="">
+
+          <!-- ASSETS -->
+          <a-assets>
+
+            <a-asset-item id="rextitle" src="3D/VREX.gltf"></a-asset-item>
+
+          </a-assets>
+
+          <a-entity gltf-model="#rextitle" animation-mixer></a-entity>
+
+          <a-sky color="#ECECEC" material="color: #d6001c" geometry=""></a-sky>
+          <a-camera position="3 1 10" camera="" rotation="0.6875493541569879 -1.4896902673401404 0" look-controls="" wasd-controls="" data-aframe-inspector-original-camera=""></a-camera>
+
+          <div class="a-loader-title" style="display: none;"></div><a-entity gltf-model="3D/VREX.gltf" animation-mixer="" material="color: #FFFff; emissive: #ffffff; emissiveIntensity: 1.96"></a-entity><div class="a-loader-title" style="display: none;"></div>
+          <!--
+          <a-image src="play-button.png" id="play-button"></a-image>-->
+
+          <a-image src="play-button.png" id="play-button"></a-image>
+
+          <a-entity button-controls="debug: true;"></a-entity>
+          <a-sound id="sound" src= 'sound/audio-test.mp3' autoplay='false'></a-sound>
+        </a-scene>
+
+
+      </a-scene>
+    </div>
+
+  </body>
+</html>
